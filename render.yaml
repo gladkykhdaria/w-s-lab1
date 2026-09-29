@@ -1,0 +1,20 @@
+# Render Blueprint: creates the PostgreSQL database + the web service in one go
+databases:
+  - name: portfolio-db
+    plan: free
+    databaseName: portfolio
+    user: portfolio
+
+services:
+  - type: web
+    name: portfolio-app
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: portfolio-db
+          property: connectionString

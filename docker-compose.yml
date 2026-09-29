@@ -1,0 +1,20 @@
+# Run everything locally with one command:  docker compose up --build
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: portfolio
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/portfolio
+      PORT: 3000
+    ports: ["3000:3000"]
+    depends_on: [db]
+    restart: on-failure
+volumes:
+  pgdata:
