@@ -29,7 +29,6 @@ Browser ──fetch()──▶ Express REST API (Node.js) ──SQL──▶ Pos
 | POST | `/api/skills` body `{name, category, level}` | add skill |
 | PUT | `/api/skills/:id` | edit skill |
 | DELETE | `/api/skills/:id` | delete skill |
-| POST | `/api/skills/:id/like` | +1 like |
 | GET | `/api/projects` | list projects |
 | GET | `/api/search?name=smart&skill=py` | **LIKE search** on project names + skills |
 

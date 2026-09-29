@@ -1,4 +1,3 @@
-// Web & Cloud Applications exercise — Express REST API + PostgreSQL + static frontend
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -8,29 +7,24 @@ const { pool, init } = require('./db');
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));   // serves the static frontend
+app.use(express.static(path.join(__dirname, 'public')));
 
-// small helper so every route handles errors the same way
 const route = (fn) => (req, res) =>
   fn(req, res).catch((err) => {
     console.error(err);
     res.status(500).json({ error: 'Database error', detail: err.message });
   });
 
-// ---------- Health ----------
 app.get('/api/health', route(async (req, res) => {
   await pool.query('SELECT 1');
-  res.json({ status: 'ok', db: 'connected', time: new Date().toISOString() });
+  res.json({ status: 'ok', db: 'connected' });
 }));
 
-// ---------- Profile ----------
 app.get('/api/profile', route(async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM profile ORDER BY id LIMIT 1');
   res.json(rows[0] || null);
 }));
 
-// ---------- Skills (CRUD) ----------
-// GET /api/skills?category=Web
 app.get('/api/skills', route(async (req, res) => {
   const { category } = req.query;
   const { rows } = category
@@ -71,24 +65,11 @@ app.delete('/api/skills/:id', route(async (req, res) => {
   res.status(204).end();
 }));
 
-// Like a skill (the "like" button on the page)
-app.post('/api/skills/:id/like', route(async (req, res) => {
-  const { rows } = await pool.query(
-    'UPDATE skills SET likes = likes + 1 WHERE id = $1 RETURNING *', [req.params.id]);
-  if (!rows.length) return res.status(404).json({ error: 'Skill not found' });
-  res.json(rows[0]);
-}));
-
-// ---------- Projects ----------
 app.get('/api/projects', route(async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM projects ORDER BY id');
   res.json(rows);
 }));
 
-// ---------- SEARCH (SQL LIKE / ILIKE) ----------
-// GET /api/search?name=smart          -> projects whose name matches
-// GET /api/search?skill=python        -> skills + projects that use that skill
-// GET /api/search?name=smart&skill=rust  -> both filters combined
 app.get('/api/search', route(async (req, res) => {
   const name = (req.query.name || '').trim();
   const skill = (req.query.skill || '').trim();
@@ -113,7 +94,6 @@ app.get('/api/search', route(async (req, res) => {
   res.json({ query: { name, skill }, skills, projects });
 }));
 
-// unknown API routes -> JSON 404
 app.use('/api', (req, res) => res.status(404).json({ error: 'Endpoint not found' }));
 
 const PORT = process.env.PORT || 3000;

@@ -1,4 +1,3 @@
-# Render Blueprint: creates the PostgreSQL database + the web service in one go
 databases:
   - name: portfolio-db
     plan: free

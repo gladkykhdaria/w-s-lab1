@@ -1,4 +1,3 @@
-// PostgreSQL connection + auto-setup (creates tables and seeds data on first run)
 const fs = require('fs');
 const path = require('path');
 const { Pool } = require('pg');
@@ -8,7 +7,6 @@ const isLocal = !connectionString || /localhost|127\.0\.0\.1|@db:/.test(connecti
 
 const pool = new Pool({
   connectionString,
-  // Cloud Postgres (Render, Neon, Supabase...) needs SSL, local doesn't
   ssl: isLocal ? false : { rejectUnauthorized: false },
 });
 

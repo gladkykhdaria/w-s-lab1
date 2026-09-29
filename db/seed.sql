@@ -1,4 +1,3 @@
--- EDIT THIS FILE with your real details, then reset the DB (see README)
 INSERT INTO profile (full_name, nickname, student_group, email, university, city, bio) VALUES
 ('Daria Gladkykh', 'Hope', '1231EB', 'your.email@stud.fils.upb.ro',
  'FILS, National University of Science and Technology POLITEHNICA Bucharest', 'Bucharest',

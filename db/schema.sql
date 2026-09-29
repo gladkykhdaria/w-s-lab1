@@ -1,4 +1,3 @@
--- Tables are created automatically when the server starts
 CREATE TABLE IF NOT EXISTS profile (
   id            SERIAL PRIMARY KEY,
   full_name     TEXT NOT NULL,
@@ -13,14 +12,13 @@ CREATE TABLE IF NOT EXISTS profile (
 CREATE TABLE IF NOT EXISTS skills (
   id        SERIAL PRIMARY KEY,
   name      TEXT NOT NULL UNIQUE,
-  category  TEXT NOT NULL,           -- Languages, Embedded, Data, Web, Soft skills...
-  level     INT  NOT NULL CHECK (level BETWEEN 1 AND 5),
-  likes     INT  NOT NULL DEFAULT 0
+  category  TEXT NOT NULL,
+  level     INT  NOT NULL CHECK (level BETWEEN 1 AND 5)
 );
 
 CREATE TABLE IF NOT EXISTS projects (
   id          SERIAL PRIMARY KEY,
   name        TEXT NOT NULL,
   description TEXT,
-  tech        TEXT[] NOT NULL DEFAULT '{}'   -- skills used, searchable
+  tech        TEXT[] NOT NULL DEFAULT '{}'
 );
