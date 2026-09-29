@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daria Gladkykh — portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="hello" id="nickname">Hi, I'm Hope</p>
+      <h1 id="fullName">Daria Gladkykh</h1>
+      <dl class="facts">
+        <div><dt>Group</dt><dd id="group">1231EB</dd></div>
+        <div><dt>Email</dt><dd><a id="email" href="#">loading…</a></dd></div>
+        <div><dt>Based in</dt><dd id="city">Bucharest</dd></div>
+      </dl>
+    </div>
+    <svg class="trace" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+      <path id="tracePath" d="" />
+    </svg>
+  </header>
+
+  <main class="wrap">
+    <section class="about">
+      <h2>About me</h2>
+      <p id="bio" class="lead">Loading…</p>
+      <p id="university" class="muted"></p>
+    </section>
+
+    <section class="search" aria-labelledby="searchTitle">
+      <h2 id="searchTitle">Search my skills and projects</h2>
+      <p class="muted">Results come live from <code>/api/search</code>, which runs a PostgreSQL <code>ILIKE</code> query.</p>
+      <form id="searchForm" class="search-form" autocomplete="off">
+        <label>Project name
+          <input id="qName" type="search" placeholder="e.g. smart" />
+        </label>
+        <label>Skill
+          <input id="qSkill" type="search" placeholder="e.g. python" />
+        </label>
+        <button type="submit">Search</button>
+      </form>
+      <div id="searchResults" class="results" aria-live="polite"></div>
+    </section>
+
+    <section aria-labelledby="skillsTitle">
+      <h2 id="skillsTitle">Skills</h2>
+      <p class="muted">Tap the heart if you like a skill — it's saved in the database.</p>
+      <div id="skills" class="skills"></div>
+    </section>
+
+    <section aria-labelledby="projectsTitle">
+      <h2 id="projectsTitle">Projects</h2>
+      <ul id="projects" class="projects"></ul>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <h2>API</h2>
+    <p class="muted">REST endpoints behind this page:</p>
+    <table class="api">
+      <tr><td>GET</td><td><a href="/api/health">/api/health</a></td><td>server + database status</td></tr>
+      <tr><td>GET</td><td><a href="/api/profile">/api/profile</a></td><td>my details</td></tr>
+      <tr><td>GET</td><td><a href="/api/skills">/api/skills</a></td><td>all skills (<code>?category=Web</code>)</td></tr>
+      <tr><td>POST · PUT · DELETE</td><td>/api/skills/:id</td><td>create, edit, remove a skill</td></tr>
+      <tr><td>POST</td><td>/api/skills/:id/like</td><td>like a skill</td></tr>
+      <tr><td>GET</td><td><a href="/api/projects">/api/projects</a></td><td>all projects</td></tr>
+      <tr><td>GET</td><td><a href="/api/search?skill=python">/api/search?name=&amp;skill=</a></td><td>LIKE search</td></tr>
+    </table>
+    <p class="muted small" id="status">Checking server…</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
